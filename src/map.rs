@@ -1,30 +1,33 @@
 
 
 #[derive(Debug, Default)]
-struct Map {
-    world: Vec<Cell>,
-    width: u32,
-    height: u32,
+pub struct Map {
+    pub world: Vec<Vec<Cell>>,
+    pub width: u32,
+    pub height: u32,
 }
 
 impl Map {
     pub fn new(width: u32, height: u32,) -> Self {
         let mut map = Map::default();
-        for _ in 0..(width*height) {
-            map.world.push(Cell{terrain_type:TerrainType::default()});
-        }
+        map.width = width;
+        map.height = height;
+        map.world = (0..width).map(|_|{
+            (0..height).map(|_|Cell{terrain_type:TerrainType::default()}).collect()
+        }).collect();
         map
     }
+
 }
 
 
 #[derive(Debug)]
-struct Cell {
-    terrain_type: TerrainType
+pub struct Cell {
+    pub terrain_type: TerrainType
 }
 
 #[derive(Debug)]
-enum TerrainType {
+pub enum TerrainType {
     Road,
     Grass,
     Dirt,
